@@ -1,0 +1,51 @@
+.App {
+  display: flex;
+  flex: 1;
+  padding: 10px;
+  overflow: scroll;
+  flex-shrink: 0;
+  min-height: 300px;
+}
+
+.Message {
+  border: 1px solid green;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px;
+}
+
+.Message-not-saved {
+  color: #eee;
+}
+
+.Message-author {
+  font-weight: bold;
+}
+
+.Message-text {
+  margin-top: 5px;
+}
+
+.ChatGroupList {
+  width: 200px;
+  border: 1px solid black;
+  display: flex;
+  height:100%;
+  flex-direction: column;
+}
+.ChatGroupList-item {
+  height: 30px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid navyl
+  padding 0 5px;
+}
+
+.ChatGroupList-item-selected {
+  background-color: #00ffd0;
+}
+
+.ChatGroupList-item:hover {
+  background-color: #00ffd0;
+  cursor: pointer;
+}
