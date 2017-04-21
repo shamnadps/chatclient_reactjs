@@ -1,5 +1,12 @@
 import React, { Component} from 'react';
+import './index.css';
 
+const ErrorMessages = ({errorMessages}) => {
+  const className = errorMessages.length > 0 ? "error" : "noerror";
+  return (
+    <p className={className}>{errorMessages}</p>
+  )
+};
 class Form extends Component {
   constructor() {
     super();
@@ -9,23 +16,29 @@ class Form extends Component {
       message: ''
     };
 
-    this.onSubmit = this.onSubmit.bind(this);
+    this.onSubmitNick = this.onSubmitNick.bind(this);
+    this.onSubmitChat = this.onSubmitChat.bind(this);
     this.updateName = this.updateName.bind(this);
     this.updateMessage = this.updateMessage.bind(this);
   }
 
-  onSubmit() {
+  onSubmitNick() {
+    const {name} = this.state;
+    this.props.onSendNick(name);
+  }
+
+  onSubmitChat() {
     const {name, message} = this.state;
-    this.props.onSend(name, message);
-    this.setState({name:'', message:''});
+    this.props.onSendChat(name, message);
+    this.setState({message:''});
   }
 
   updateName(event) {
-    this.setState({name:event.target.value.trim()});
+    this.setState({name:event.target.value});
   }
 
   updateMessage(event) {
-    this.setState({message:event.target.value.trim()});
+    this.setState({message:event.target.value});
   }
 
   render () {
@@ -39,19 +52,18 @@ class Form extends Component {
               placeholder="username"
               value={this.state.name}
               onChange={this.updateName}
-              />
+            />
+            <button className="send" onClick={this.onSubmitNick}>Send</button>
           </p>
+          <ErrorMessages errorMessages={this.props.errorMessages}/>
           <p>
             <textarea
-              ref={(node) => {this.chat_message = node}}
               className="message"
               placeholder="Message"
               value={this.state.message}
               onChange={this.updateMessage}
-              />
-          </p>
-          <p>
-            <button className="send" onClick={this.onSubmit}>Send</button>
+            />
+            <button className="send" onClick={this.onSubmitChat}>Send</button>
           </p>
         </div>
       </div>
@@ -60,11 +72,13 @@ class Form extends Component {
 };
 
 Form.propTypes = {
-  onSend: React.PropTypes.func.isRequired
+  onSendNick: React.PropTypes.func.isRequired,
+  onSendChat: React.PropTypes.func.isRequired
 };
 
 Form.defaultProps = {
-  onSend: () => {}
+  onSendNick: () => {},
+  onSendChat: () => {}
 };
 
 export default Form;

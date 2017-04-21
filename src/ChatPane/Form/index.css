@@ -1,0 +1,13 @@
+.error {
+  color: red;
+  border: 1px solid red;
+  padding:10px;
+  background-color: yellow;
+}
+.noerror {
+  color: red;
+  border: 1px solid red;
+  padding:10px;
+  background-color: yellow;
+  display:none;
+}
