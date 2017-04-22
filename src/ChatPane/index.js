@@ -15,10 +15,10 @@ const List =({messages}) => (
   </div>
 );
 
-const ChatPane = ({messages, errorMessages, onSendNick, onSendChat}) => (
+const ChatPane = ({messages, errorMessages, onSendNick, onSendChat, connectionClosed}) => (
   <div className="MessagePane">
     <List messages={messages} />
-    <Form errorMessages={errorMessages} onSendNick={onSendNick} onSendChat={onSendChat}/>
+    <Form errorMessages={errorMessages} onSendNick={onSendNick} onSendChat={onSendChat} connectionClosed={connectionClosed}/>
   </div>
 );
 

@@ -51,7 +51,7 @@ class Form extends Component {
             <input
               className="name"
               type="text"
-              placeholder="username ~ 20 Chars"
+              placeholder="username ~ 20 Chars (Alphanumeric)"
               value={this.state.name}
               onChange={this.updateName}
             />

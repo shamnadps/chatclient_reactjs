@@ -13,6 +13,7 @@ const chatMembers = [
 
 const messages = [];
 const errorMessages = '';
+const connectionClosed = true;
 
 class App extends Component {
   constructor() {
@@ -21,7 +22,8 @@ class App extends Component {
       messages,
       chatMembers,
       errorMessages,
-      selectedChatId: chatMembers[0].id
+      selectedChatId: chatMembers[0].id,
+      connectionClosed
     };
     this.onSendNick = this.onSendNick.bind(this);
     this.onSendChat = this.onSendChat.bind(this);
@@ -91,7 +93,6 @@ class App extends Component {
     fetch(getHistoryurl)
     .then(result => result.json())
     .then(result => {
-      result.data.map(({timestamp, from, msg}) => console.log(from+":"+msg+":"+timestamp))
       var chatHistoryList = result.data.map(function(item) {
         const chatHistory = {
           id: item.timestamp,
@@ -111,6 +112,9 @@ class App extends Component {
     this.handShakeCompleted = false;
     this.connection = new WebSocket('ws://localhost:8888/');
     this.connection.onmessage = evt => {
+      this.setState({
+        connectionClosed: false
+      })
       if(this.handShakeCompleted) {
         var parsedata = JSON.parse(evt.data);
         var message;
@@ -138,10 +142,18 @@ class App extends Component {
     };
     this.connection.onerror = evt => {
       this.error = true;
+      this.setState({
+        connectionClosed: true,
+        errorMessages: "Connection closed! Restart Server."
+      })
       console.log("OnError");
     };
     this.connection.onclose = evt => {
       this.error = true;
+      this.setState({
+        connectionClosed: true,
+        errorMessages: "Connection closed! Restart Server."
+      })
       console.log("OnClose Connection Closed");
     };
   }
@@ -163,6 +175,7 @@ class App extends Component {
           errorMessages={this.state.errorMessages}
           onSendNick={this.onSendNick}
           onSendChat={this.onSendChat}
+          connectionClosed={this.state.connectionClosed}
         />
       </div>
     );
