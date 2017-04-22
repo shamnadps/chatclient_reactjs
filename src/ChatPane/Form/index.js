@@ -7,6 +7,8 @@ const ErrorMessages = ({errorMessages}) => {
     <p className={className}>{errorMessages}</p>
   )
 };
+
+const nonAlphaNumericRegex = /[^0-9a-zA-Z]+/g;
 class Form extends Component {
   constructor() {
     super();
@@ -34,11 +36,11 @@ class Form extends Component {
   }
 
   updateName(event) {
-    this.setState({name:event.target.value});
+    this.setState({name:event.target.value.replace(nonAlphaNumericRegex, "").substr(0,15)});
   }
 
   updateMessage(event) {
-    this.setState({message:event.target.value});
+    this.setState({message:event.target.value.substr(0,200)});
   }
 
   render () {
@@ -49,7 +51,7 @@ class Form extends Component {
             <input
               className="name"
               type="text"
-              placeholder="username"
+              placeholder="username ~ 20 Chars"
               value={this.state.name}
               onChange={this.updateName}
             />
@@ -59,7 +61,7 @@ class Form extends Component {
           <p>
             <textarea
               className="message"
-              placeholder="Message"
+              placeholder="Message ~ 200 Chars"
               value={this.state.message}
               onChange={this.updateMessage}
             />
