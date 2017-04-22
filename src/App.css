@@ -49,3 +49,149 @@
   background-color: #00ffd0;
   cursor: pointer;
 }
+
+body {
+  padding-top: 50px;
+}
+
+#main {
+  height: 100vh;
+  overflow: hidden;
+  background-color: #f5f5f5;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+textarea {
+  resize: none;
+  padding-right: 75px;
+}
+
+.well {
+  background-color: #d6e9c6 !important;
+}
+
+.chat-container {
+  border: 1px solid lightgray;
+  padding: 20px;
+  height: 70vh;
+  overflow: scroll;
+}
+
+.user-container {
+  border: 1px solid lightgray;
+  padding: 20px;
+}
+
+.chatbox-container {
+  border: 1px solid lightgray;
+  background: #f5f3f3 none repeat scroll 0 0;
+  padding: 20px;
+  height: 23vh;
+}
+
+.chat-box {
+  width: 100%;
+  position: relative;
+}
+
+.chat-box > textarea {
+  height: 110px !important;
+}
+
+.media > .media-body {
+  width: 90%;
+  position: relative;
+}
+
+.btn-chat {
+  border-radius: 50% !important;
+  position: absolute;
+  top: 50px;
+  right: 25px;
+}
+
+.usermenu-toggle {
+  display: none;
+}
+
+.panel-menu > li {
+  float: left;
+}
+
+.sidebar-left {
+  position: relative;
+  z-index: inherit;
+  padding-bottom: 3000px !important;
+  margin-bottom: -3000px !important;
+  background: #31708f 0 0 repeat;
+  -webkit-transition: 0.2s;
+  -moz-transition: 0.2s;
+  -o-transition: 0.2s;
+  transition: 0.2s;
+  border-right: 1px solid white;
+}
+
+.nav.main-menu {
+  margin: 0 -15px;
+  padding-top: 50px;
+}
+
+
+.nav.main-menu > li > a, .nav.msg-menu > li > a {
+  text-align: center;
+  color: #f0f0f0;
+  min-height: 40px;
+  -webkit-transition: 0.2s;
+  -moz-transition: 0.2s;
+  -o-transition: 0.2s;
+  transition: 0.2s;
+}
+
+.nav.main-menu > li > a:hover {
+  background: rgba(0, 0, 0, 0.1);
+  color: #f0f0f0;
+}
+
+@media (max-width: 768px) {
+  .hidden-item {
+    display: none;
+  }
+
+  .chatbox-container {
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    position: fixed;
+    z-index: 1001;
+  }
+
+  .usermenu-toggle {
+    display: block;
+    position: relative;
+    float: right;
+    padding: 6px 10px;
+    margin-top: 8px;
+    margin-right: 15px;
+    margin-bottom: 8px;
+    border: 1px solid transparent;
+    border-radius: 25px;
+  }
+
+  .user-menu {
+    position: fixed !important;
+    z-index: 1000;
+  }
+
+  .sidebar-hide {
+    display: none;
+  }
+}
+
+@media (min-width: 992px) {
+  .nav.main-menu > li > a, .nav.msg-menu > li > a {
+    text-align: left;
+  }
+}

@@ -1,19 +1,30 @@
 import React, { Component } from 'react';
 import ChatPane from './ChatPane';
 import ChatGroupList from './ChatGroup';
+import NavBar from './NavBar';
+import NavBarItems from './NavBarItems';
+import ChatInput from './ChatInput';
+import ChatMessage from './ChatMessage';
 import './App.css';
 
 const getMembersurl = 'http://localhost:8888/users';
 const getHistoryurl = 'http://localhost:8888/history';
 
 const chatMembers = [
-  { id:1, name: 'Group Chat', online: true},
-  { id:2, name: 'App Notifications', online: true },
+  { id:2, name: 'Group Chat', online: true},
+  { id:1, name: 'App Notifications', online: true },
+  { id:3, name: 'Group Chat', online: true},
+  { id:4, name: 'App Notifications', online: true },
 ];
 
-const messages = [];
+const messages = [
+{ id:1, author: 'Shamnad', text: "HelloWorld", chat_id:1},
+{ id:2, author: 'Shamnad', text: "HelloWorld", chat_id:1},
+{ id:3, author: 'Shamnad', text: "HelloWorld", chat_id:1},
+];
 const errorMessages = '';
 const connectionClosed = true;
+const toggleNavBar = 'col-sm-2 col-xs-2 user-menu sidebar-left sidebar-hide';
 
 class App extends Component {
   constructor() {
@@ -23,8 +34,10 @@ class App extends Component {
       chatMembers,
       errorMessages,
       selectedChatId: chatMembers[0].id,
-      connectionClosed
+      connectionClosed,
+      toggleNavBar
     };
+    this.toggleNavBarDiv = true;
     this.onSendNick = this.onSendNick.bind(this);
     this.onSendChat = this.onSendChat.bind(this);
     this.buildNewChatEntry = this.buildNewChatEntry.bind(this);
@@ -33,6 +46,7 @@ class App extends Component {
     this.handleWebSocketConnection = this.handleWebSocketConnection.bind(this);
     this.getMemberdata = this.getMemberdata.bind(this);
     this.getHistoryData = this.getHistoryData.bind(this);
+    this.toggleNavBar = this.toggleNavBar.bind(this);
   }
 
   onSendNick(author) {
@@ -58,6 +72,16 @@ class App extends Component {
   onChatGroupSelect(id) {
     this.getHistoryData();
     this.setState({selectedChatId: id});
+  }
+
+  toggleNavBar() {
+    if(this.toggleNavBarDiv) {
+      this.setState({toggleNavBar: 'col-sm-2 col-xs-2 user-menu sidebar-left '});
+      this.toggleNavBarDiv = false;
+    } else {
+      this.setState({toggleNavBar: 'col-sm-2 col-xs-2 user-menu sidebar-left sidebar-hide'});
+      this.toggleNavBarDiv = true;
+    }
   }
 
   filteredmessages() {
@@ -164,19 +188,44 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <ChatGroupList
-          chatMembers={this.state.chatMembers}
-          selectedChatId={this.state.selectedChatId}
-          onSelect={this.onChatGroupSelect}
-        />
-        <ChatPane
-          messages={this.filteredmessages()}
-          errorMessages={this.state.errorMessages}
-          onSendNick={this.onSendNick}
-          onSendChat={this.onSendChat}
-          connectionClosed={this.state.connectionClosed}
-        />
+      // <div className="App">
+      //   <ChatGroupList
+      //     chatMembers={this.state.chatMembers}
+      //     selectedChatId={this.state.selectedChatId}
+      //     onSelect={this.onChatGroupSelect}
+      //   />
+      //   <ChatPane
+      //     messages={this.filteredmessages()}
+      //     errorMessages={this.state.errorMessages}
+      //     onSendNick={this.onSendNick}
+      //     onSendChat={this.onSendChat}
+      //     connection
+      //   />
+      // </div>
+      <div>
+        <div className="navbar navbar-inverse navbar-fixed-top">
+          <NavBar toggleNavBar={this.toggleNavBar}/>
+        </div>
+        <div id="main" className="body-content container-fluid">
+          <div className="row">
+            <div className={this.state.toggleNavBar}>
+              <NavBarItems
+                onlinemembers={this.state.chatMembers}
+                selectedChatId={this.state.selectedChatId}
+                onSelect={this.onChatGroupSelect}
+              />
+            </div>
+            <div className="col-sm-10 col-xs-12">
+              <hr />
+              <div className="chat-area">
+                <ChatMessage messages={this.filteredmessages()}/>
+                <ChatInput onSendNick={this.onSendNick} onSendChat={this.onSendChat}/>
+              </div>
+              <hr />
+              <footer></footer>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
