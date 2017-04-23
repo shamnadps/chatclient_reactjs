@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 import NavBar from './NavBar';
 import NavBarItems from './NavBarItems';
 import ChatInput from './ChatInput';
@@ -9,8 +10,8 @@ const getMembersurl = 'http://localhost:8888/users';
 const getHistoryurl = 'http://localhost:8888/history';
 
 const chatMembers = [
-  { id:2, name: 'Group Chat', online: true},
-  { id:1, name: 'App Notifications', online: true },
+  { id:1, name: 'Group Chat', online: true},
+  { id:2, name: 'App Notifications', online: true },
 ];
 
 const messages = [];
@@ -57,7 +58,8 @@ class App extends Component {
       id:this.state.messages.length + 1,
       author,
       text,
-      chat_id: author
+      chat_id: author,
+      timestamp:moment().toDate().getTime()
     };
     const messages = [...this.state.messages, new_message];
     this.setState({messages});

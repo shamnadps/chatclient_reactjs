@@ -4,7 +4,7 @@ const NavBarItem =({id, name, online, isSelected, onClick}) => (
   <li onClick={onClick}>
       <a href="#" className="ajax-link">
           <i className="glyphicon glyphicon-user"></i>
-          <span className="hidden-xs">{name}</span>
+          <span className="hidden-xs membername">{name}</span>
       </a>
   </li>
 );

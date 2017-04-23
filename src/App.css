@@ -26,30 +26,6 @@
   margin-top: 5px;
 }
 
-.ChatGroupList {
-  width: 200px;
-  border: 1px solid black;
-  display: flex;
-  height:100%;
-  flex-direction: column;
-}
-.ChatGroupList-item {
-  height: 30px;
-  display: flex;
-  align-items: center;
-  border-bottom: 1px solid navyl
-  padding 0 5px;
-}
-
-.ChatGroupList-item-selected {
-  background-color: #00ffd0;
-}
-
-.ChatGroupList-item:hover {
-  background-color: #00ffd0;
-  cursor: pointer;
-}
-
 body {
   padding-top: 50px;
 }
@@ -67,7 +43,7 @@ body {
 }
 
 .btn-margin {
-  margin-top:20px
+  margin-top:10px
 }
 
 #main {
@@ -87,6 +63,7 @@ textarea {
 
 .well {
   background-color: #d6e9c6 !important;
+  word-wrap: break-word;
 }
 
 .chat-container {
@@ -104,8 +81,30 @@ textarea {
 .chatbox-container {
   border: 1px solid lightgray;
   background: #f5f3f3 none repeat scroll 0 0;
-  padding: 20px;
+  padding: 10px;
   height: 23vh;
+}
+
+.timestamp {
+  float:right;
+}
+
+.error {
+  color: red;
+  border: 1px solid red;
+  padding:5px;
+  background-color: yellow;
+}
+.noerror {
+  color: red;
+  border: 1px solid red;
+  padding:10px;
+  background-color: yellow;
+  display:none;
+}
+
+.membername {
+  margin-left: 5px;
 }
 
 .chat-box {
@@ -157,7 +156,7 @@ textarea {
 
 
 .nav.main-menu > li > a, .nav.msg-menu > li > a {
-  text-align: center;
+  text-align: left;
   color: #f0f0f0;
   min-height: 40px;
   -webkit-transition: 0.2s;
