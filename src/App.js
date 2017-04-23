@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import ChatPane from './ChatPane';
-import ChatGroupList from './ChatGroup';
 import NavBar from './NavBar';
 import NavBarItems from './NavBarItems';
 import ChatInput from './ChatInput';
@@ -13,15 +11,9 @@ const getHistoryurl = 'http://localhost:8888/history';
 const chatMembers = [
   { id:2, name: 'Group Chat', online: true},
   { id:1, name: 'App Notifications', online: true },
-  { id:3, name: 'Group Chat', online: true},
-  { id:4, name: 'App Notifications', online: true },
 ];
 
-const messages = [
-{ id:1, author: 'Shamnad', text: "HelloWorld", chat_id:1},
-{ id:2, author: 'Shamnad', text: "HelloWorld", chat_id:1},
-{ id:3, author: 'Shamnad', text: "HelloWorld", chat_id:1},
-];
+const messages = [];
 const errorMessages = '';
 const connectionClosed = true;
 const toggleNavBar = 'col-sm-2 col-xs-2 user-menu sidebar-left sidebar-hide';
@@ -35,7 +27,8 @@ class App extends Component {
       errorMessages,
       selectedChatId: chatMembers[0].id,
       connectionClosed,
-      toggleNavBar
+      toggleNavBar,
+      nickSuccessful: 0
     };
     this.toggleNavBarDiv = true;
     this.onSendNick = this.onSendNick.bind(this);
@@ -51,6 +44,7 @@ class App extends Component {
 
   onSendNick(author) {
     this.connection.send("/nick "+author);
+    this.setState({nickSuccessful: 1});
   }
 
   onSendChat(author, text) {
@@ -137,15 +131,17 @@ class App extends Component {
     this.connection = new WebSocket('ws://localhost:8888/');
     this.connection.onmessage = evt => {
       this.setState({
-        connectionClosed: false
+        connectionClosed: false,
       })
       if(this.handShakeCompleted) {
         var parsedata = JSON.parse(evt.data);
+        console.log("parseddata:"+JSON.stringify(parsedata));
         var message;
         if(parsedata.error) {
           this.error = true;
           message = parsedata.error;
         } else {
+          this.error = false;
           message = parsedata.message;
         }
         if(!this.error) {
@@ -153,12 +149,17 @@ class App extends Component {
             this.getMemberdata();
           }
           this.buildNewChatEntry(parsedata.from, message);
+          if ( this.state.nickSuccessful === 1 ) {
+            this.setState({
+              nickSuccessful: 2,
+              errorMessages: ''
+            })
+          }
         } else {
           console.log(parsedata.error);
           this.setState({
             errorMessages: parsedata.error
           })
-          console.log(this.state.errorMessages);
         }
       } else {
         this.handShakeCompleted = true;
@@ -188,20 +189,6 @@ class App extends Component {
 
   render() {
     return (
-      // <div className="App">
-      //   <ChatGroupList
-      //     chatMembers={this.state.chatMembers}
-      //     selectedChatId={this.state.selectedChatId}
-      //     onSelect={this.onChatGroupSelect}
-      //   />
-      //   <ChatPane
-      //     messages={this.filteredmessages()}
-      //     errorMessages={this.state.errorMessages}
-      //     onSendNick={this.onSendNick}
-      //     onSendChat={this.onSendChat}
-      //     connection
-      //   />
-      // </div>
       <div>
         <div className="navbar navbar-inverse navbar-fixed-top">
           <NavBar toggleNavBar={this.toggleNavBar}/>
@@ -219,7 +206,12 @@ class App extends Component {
               <hr />
               <div className="chat-area">
                 <ChatMessage messages={this.filteredmessages()}/>
-                <ChatInput onSendNick={this.onSendNick} onSendChat={this.onSendChat}/>
+                <ChatInput
+                  onSendNick={this.onSendNick}
+                  onSendChat={this.onSendChat}
+                  nickSuccessful={this.state.nickSuccessful}
+                  errorMessages={this.state.errorMessages}
+                />
               </div>
               <hr />
               <footer></footer>

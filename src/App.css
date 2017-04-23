@@ -54,6 +54,22 @@ body {
   padding-top: 50px;
 }
 
+.nick {
+  text-align:center;
+}
+
+.hidden {
+  display: none;
+}
+
+.show {
+  display: block;
+}
+
+.btn-margin {
+  margin-top:20px
+}
+
 #main {
   height: 100vh;
   overflow: hidden;

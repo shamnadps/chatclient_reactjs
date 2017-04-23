@@ -1,5 +1,12 @@
 import React, { Component} from 'react';
 
+const ErrorMessages = ({errorMessages}) => {
+  const className = errorMessages.length > 0 ? "error" : "noerror";
+  return (
+    <p className={className}>{errorMessages}</p>
+  )
+};
+
 const nonAlphaNumericRegex = /[^0-9a-zA-Z]+/g;
 class ChatInput extends Component {
   constructor() {
@@ -7,7 +14,9 @@ class ChatInput extends Component {
 
     this.state = {
       name: '',
-      message: ''
+      message: '',
+      showChatInput: 'hidden',
+      showNickInput: 'nick'
     };
 
     this.onSubmitNick = this.onSubmitNick.bind(this);
@@ -37,31 +46,10 @@ class ChatInput extends Component {
 
   render () {
     return (
-      // <div className="MessagePane-Form">
-      // <div className="MessagePane-Form-container">
-      // <p>
-      // <input
-      // className="name"
-      // type="text"
-      // placeholder="username ~ 20 Chars (Alphanumeric)"
-      // value={this.state.name}
-      // onChange={this.updateName}
-      // />
-      // <button className="send" onClick={this.onSubmitNick}>Send</button>
-      // </p>
-      // <ErrorMessages errorMessages={this.props.errorMessages}/>
-      // <p>
-      // <textarea
-      // className="message"
-      // placeholder="Message ~ 200 Chars"
-      // value={this.state.message}
-      // onChange={this.updateMessage}
-      // />
-      // <button className="send" onClick={this.onSubmitChat}>Send</button>
-      // </p>
-      // </div>
       <div className="chatbox-container">
         <div className="chat-box">
+        <ErrorMessages errorMessages={this.props.errorMessages}/>
+        <div className={ (this.props.nickSuccessful === 2) ? 'show' : 'hidden'}>
           <textarea
             className="form-control"
             placeholder="Message ~ 200 Chars"
@@ -72,6 +60,17 @@ class ChatInput extends Component {
           <button type="button" onClick={this.onSubmitChat} className="btn btn-lg btn-primary btn-chat">
             <span className="glyphicon glyphicon-send"></span>
           </button>
+          </div>
+          <div className={ (this.props.nickSuccessful !== 2) ? 'show' : 'hidden'} >
+
+            <input type="text"
+              className="form-control"
+              placeholder="Set a Nickname ~ 20 Chars"
+              value={this.state.name}
+              onChange={this.updateName}
+            />
+            <button type="button" onClick={this.onSubmitNick} className="btn btn-primary btn-margin" >Set Nickname</button>
+          </div>
         </div>
       </div>
 
