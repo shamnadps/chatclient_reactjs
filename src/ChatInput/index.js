@@ -6,9 +6,8 @@ const ErrorMessages = ({errorMessages}) => {
     <p className={className}>{errorMessages}</p>
   )
 };
-
-const nonAlphaNumericRegex = /[^0-9a-zA-Z]+/g;
 class ChatInput extends Component {
+  nonAlphaNumericRegex = /[^0-9a-zA-Z]+/g;
   constructor() {
     super();
 
@@ -37,7 +36,7 @@ class ChatInput extends Component {
   }
 
   updateName(event) {
-    this.setState({name:event.target.value.replace(nonAlphaNumericRegex, "").substr(0,15)});
+    this.setState({name:event.target.value.replace(this.nonAlphaNumericRegex, "").substr(0,15)});
   }
 
   updateMessage(event) {

@@ -6,30 +6,25 @@ import ChatInput from './ChatInput';
 import ChatMessage from './ChatMessage';
 import './App.css';
 
-const getMembersurl = 'http://localhost:8888/users';
-const getHistoryurl = 'http://localhost:8888/history';
-const websocketserver = 'ws://localhost:8888/';
-
-const chatMembers = [
-  { id:1, name: 'Group Chat', online: true},
-  { id:2, name: 'App Notifications', online: true },
-];
-
-const messages = [];
-const errorMessages = '';
-const connectionClosed = true;
-const toggleNavBar = 'col-md-2 col-xs-2 user-menu sidebar-left sidebar-hide';
-
 class App extends Component {
+  getMembersurl = 'http://localhost:8888/users';
+  getHistoryurl = 'http://localhost:8888/history';
+  websocketserver = 'ws://localhost:8888/';
+
+  chatMembers = [
+    { id:1, name: 'Group Chat', online: true},
+    { id:2, name: 'App Notifications', online: true },
+  ];
+
   constructor() {
     super();
     this.state = {
-      messages,
-      chatMembers,
-      errorMessages,
-      selectedChatId: chatMembers[0].id,
-      connectionClosed,
-      toggleNavBar,
+      messages: [],
+      chatMembers: this.chatMembers,
+      errorMessages : '',
+      selectedChatId: this.chatMembers[0].id,
+      connectionClosed: true,
+      toggleNavBar: 'col-md-2 col-xs-2 user-menu sidebar-left sidebar-hide',
       nickSuccessful: 0
     };
     this.toggleNavBarDiv = true;
@@ -92,10 +87,10 @@ class App extends Component {
   }
 
   getMemberdata() {
-    fetch(getMembersurl)
+    fetch(this.getMembersurl)
     .then(result => result.json())
     .then(result => {
-      var chatMemberList = result.data.map(function(item) {
+      const chatMemberList = result.data.map(function(item) {
         const chatMember = {
           id: item.nick,
           name: item.nick,
@@ -103,7 +98,7 @@ class App extends Component {
         };
         return chatMember;
       })
-      const memberList = [...chatMembers, ...chatMemberList];
+      const memberList = [...this.chatMembers, ...chatMemberList];
       this.setState({
         chatMembers: memberList
       })
@@ -111,10 +106,10 @@ class App extends Component {
   }
 
   getHistoryData() {
-    fetch(getHistoryurl)
+    fetch(this.getHistoryurl)
     .then(result => result.json())
     .then(result => {
-      var chatHistoryList = result.data.map(function(item) {
+      const chatHistoryList = result.data.map(function(item) {
         const chatHistory = {
           id: item.timestamp,
           author: item.from,
@@ -131,7 +126,7 @@ class App extends Component {
 
   handleWebSocketConnection() {
     this.handShakeCompleted = false;
-    this.connection = new WebSocket(websocketserver);
+    this.connection = new WebSocket(this.websocketserver);
     this.connection.onmessage = evt => {
       this.setState({
         connectionClosed: false,
