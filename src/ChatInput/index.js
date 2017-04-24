@@ -26,13 +26,17 @@ class ChatInput extends Component {
 
   onSubmitNick() {
     const {name} = this.state;
-    this.props.onSendNick(name);
+    if (name.trim().length > 0) {
+      this.props.onSendNick(name);
+    }
   }
 
   onSubmitChat() {
     const {name, message} = this.state;
-    this.props.onSendChat(name, message);
-    this.setState({message:''});
+    if (message.trim().length > 0) {
+      this.props.onSendChat(name, message);
+      this.setState({message:''});
+    }
   }
 
   updateName(event) {

@@ -1,7 +1,7 @@
 import React from 'react';
 
 const NavBarItem =({id, name, online, isSelected, onClick}) => (
-  <li onClick={onClick}>
+  <li onClick={onClick} className={online ? "" : "offline"}>
       <a href="#" className="ajax-link">
           <i className="glyphicon glyphicon-user"></i>
           <span className="hidden-xs membername">{name}</span>

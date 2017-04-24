@@ -29,6 +29,10 @@ body {
   padding-top: 50px;
 }
 
+.offline {
+  background: #7F8C8D  ;
+}
+
 .nick {
   text-align:center;
 }
@@ -179,6 +183,12 @@ textarea {
 }
 
 .nav.main-menu > li > a:hover {
+  background: rgba(0, 0, 0, 0.1);
+  color: #f0f0f0;
+}
+
+.nav.main-menu > li > a:hover,
+.nav.main-menu > li > a:focus {
   background: rgba(0, 0, 0, 0.1);
   color: #f0f0f0;
 }
