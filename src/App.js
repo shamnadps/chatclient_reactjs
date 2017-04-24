@@ -8,6 +8,7 @@ import './App.css';
 
 const getMembersurl = 'http://localhost:8888/users';
 const getHistoryurl = 'http://localhost:8888/history';
+const websocketserver = 'ws://localhost:8888/';
 
 const chatMembers = [
   { id:1, name: 'Group Chat', online: true},
@@ -17,7 +18,7 @@ const chatMembers = [
 const messages = [];
 const errorMessages = '';
 const connectionClosed = true;
-const toggleNavBar = 'col-sm-2 col-xs-2 user-menu sidebar-left sidebar-hide';
+const toggleNavBar = 'col-md-2 col-xs-2 user-menu sidebar-left sidebar-hide';
 
 class App extends Component {
   constructor() {
@@ -72,10 +73,10 @@ class App extends Component {
 
   toggleNavBar() {
     if(this.toggleNavBarDiv) {
-      this.setState({toggleNavBar: 'col-sm-2 col-xs-2 user-menu sidebar-left '});
+      this.setState({toggleNavBar: 'col-md-2 col-xs-2 user-menu sidebar-left '});
       this.toggleNavBarDiv = false;
     } else {
-      this.setState({toggleNavBar: 'col-sm-2 col-xs-2 user-menu sidebar-left sidebar-hide'});
+      this.setState({toggleNavBar: 'col-md-2 col-xs-2 user-menu sidebar-left sidebar-hide'});
       this.toggleNavBarDiv = true;
     }
   }
@@ -130,7 +131,7 @@ class App extends Component {
 
   handleWebSocketConnection() {
     this.handShakeCompleted = false;
-    this.connection = new WebSocket('ws://localhost:8888/');
+    this.connection = new WebSocket(websocketserver);
     this.connection.onmessage = evt => {
       this.setState({
         connectionClosed: false,
@@ -204,7 +205,7 @@ class App extends Component {
                 onSelect={this.onChatGroupSelect}
               />
             </div>
-            <div className="col-sm-10 col-xs-12">
+            <div className="col-md-10 col-xs-12">
               <hr />
               <div className="chat-area">
                 <ChatMessage messages={this.filteredmessages()}/>

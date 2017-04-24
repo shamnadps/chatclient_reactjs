@@ -2,7 +2,6 @@
   display: flex;
   flex: 1;
   padding: 10px;
-  overflow: scroll;
   flex-shrink: 0;
   min-height: 300px;
 }
@@ -86,7 +85,7 @@ textarea {
 
 .chatbox-container {
   border: 1px solid lightgray;
-  background: #f5f3f3 none repeat scroll 0 0;
+  background: #f5f3f3 none repeat 0 0;
   padding: 10px;
   height: 18vh;
 }
@@ -231,6 +230,13 @@ textarea {
   }
 }
 
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+.navbar-header {
+    width: 100%;
+}
 @media (max-width: 768px) {
   .nav.main-menu > li > a, .nav.msg-menu > li > a {
     text-align: left;
