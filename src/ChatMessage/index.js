@@ -4,7 +4,7 @@ import moment from 'moment';
 const ChatMedia =({id, author, text, chat_id, timestamp}) => (
   <div className="media">
       <div className="media-body pull-left">
-          <h4 className="media-heading">{author}</h4>
+          <h4 className="media-heading">{author === '_server' ? 'App Notification' : author}</h4>
           <div className="well">{text}</div>
           <div className="timestamp">{moment(timestamp).fromNow()}</div>
           <hr/>

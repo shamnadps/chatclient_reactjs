@@ -40,6 +40,7 @@ body {
 
 .show {
   display: block;
+  text-align: center;
 }
 
 .btn-margin {
@@ -66,10 +67,15 @@ textarea {
   word-wrap: break-word;
 }
 
+.media-heading {
+  font-size: 14px;
+  font-weight: bold;
+}
+
 .chat-container {
   border: 1px solid lightgray;
   padding: 20px;
-  height: 70vh;
+  height: 75vh;
   overflow: scroll;
 }
 
@@ -82,7 +88,7 @@ textarea {
   border: 1px solid lightgray;
   background: #f5f3f3 none repeat scroll 0 0;
   padding: 10px;
-  height: 23vh;
+  height: 18vh;
 }
 
 .timestamp {
@@ -154,6 +160,14 @@ textarea {
   padding-top: 50px;
 }
 
+.navbar {
+  background: #FFF;
+  color: black;
+}
+
+.navbar-brand {
+  color: #000;
+}
 
 .nav.main-menu > li > a, .nav.msg-menu > li > a {
   text-align: left;
@@ -205,8 +219,38 @@ textarea {
   }
 }
 
-@media (min-width: 992px) {
+@media (max-width: 992px) {
   .nav.main-menu > li > a, .nav.msg-menu > li > a {
     text-align: left;
+  }
+  .chatbox-container {
+    height:15vh;
+  }
+  .chat-container {
+    height:85vh;
+  }
+}
+
+@media (max-width: 768px) {
+  .nav.main-menu > li > a, .nav.msg-menu > li > a {
+    text-align: left;
+  }
+  .chatbox-container {
+    height:18vh;
+  }
+  .chat-container {
+    height:77vh;
+  }
+}
+
+@media (max-width: 320px) {
+  .nav.main-menu > li > a, .nav.msg-menu > li > a {
+    text-align: left;
+  }
+  .chatbox-container {
+    height:20vh;
+  }
+  .chat-container {
+    height:72vh;
   }
 }

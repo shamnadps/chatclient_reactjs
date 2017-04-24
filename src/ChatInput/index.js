@@ -49,7 +49,7 @@ class ChatInput extends Component {
       <div className="chatbox-container">
         <div className="chat-box">
         <ErrorMessages errorMessages={this.props.errorMessages}/>
-        <div className={ (this.props.nickSuccessful === 2) ? 'show' : 'hidden'}>
+        <div className={ (this.props.nickSuccessful === 2 && this.props.errorMessages.length === 0) ? 'show' : 'hidden'}>
           <textarea
             className="form-control"
             placeholder="Message ~ 200 Chars"
@@ -61,7 +61,7 @@ class ChatInput extends Component {
             <span className="glyphicon glyphicon-send"></span>
           </button>
           </div>
-          <div className={ (this.props.nickSuccessful !== 2) ? 'show' : 'hidden'} >
+          <div className={ (this.props.nickSuccessful !== 2 && this.props.errorMessages.length === 0) ? 'show' : 'hidden'} >
 
             <input type="text"
               className="form-control"
