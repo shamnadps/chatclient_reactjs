@@ -247,6 +247,7 @@ textarea {
 .navbar-header {
     width: 100%;
 }
+
 @media (max-width: 768px) {
   .nav.main-menu > li > a, .nav.msg-menu > li > a {
     text-align: left;

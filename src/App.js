@@ -20,7 +20,7 @@ class App extends Component {
     super();
     this.state = {
       messages: [],
-      chatMembers: this.chatMembers,
+      chatMembers: [],
       errorMessages : '',
       selectedChatId: this.chatMembers[0].id,
       connectionClosed: true,
