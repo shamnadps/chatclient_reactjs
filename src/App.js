@@ -82,7 +82,7 @@ class App extends Component {
 
   filteredmessages() {
     if(this.state.selectedChatId === 1) {
-      return this.state.messages.filter(({author}) => author !== '_server');
+      return this.state.messages;
     } else if(this.state.selectedChatId === 2) {
       return this.state.messages.filter(({author}) => author === '_server');
     } else {
