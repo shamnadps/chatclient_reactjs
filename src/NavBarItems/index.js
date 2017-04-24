@@ -9,13 +9,17 @@ const NavBarItem =({id, name, online, isSelected, onClick}) => (
   </li>
 );
 
-const NavBarItems =({onlinemembers, selectedChatId, onSelect}) => (
+const NavBarItems =({onlinemembers, selectedChatId, onSelect, user}) => (
   <ul className="nav main-menu">
   {
     onlinemembers.map(({id, name, online}) => {
       const is_selected = selectedChatId === id;
       const onChatSelect = () => onSelect(id);
-      return <NavBarItem key={id} name={name} online={online} isSelected={is_selected} onClick={onChatSelect}/>
+      return <NavBarItem key={id}
+                name={name === user ? 'You' : name}
+                online={online}
+                isSelected={is_selected}
+                onClick={onChatSelect} />
     })
   }
   </ul>

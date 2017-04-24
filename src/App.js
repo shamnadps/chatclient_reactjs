@@ -27,6 +27,7 @@ class App extends Component {
       toggleNavBar: 'col-md-2 col-xs-2 user-menu sidebar-left sidebar-hide',
       nickSuccessful: 0
     };
+    this.user = '';
     this.toggleNavBarDiv = true;
     this.onSendNick = this.onSendNick.bind(this);
     this.onSendChat = this.onSendChat.bind(this);
@@ -41,6 +42,7 @@ class App extends Component {
 
   onSendNick(author) {
     this.connection.send("/nick "+author);
+    this.user = author;
     this.setState({nickSuccessful: 1});
   }
 
@@ -133,7 +135,6 @@ class App extends Component {
       })
       if(this.handShakeCompleted) {
         var parsedata = JSON.parse(evt.data);
-        console.log("parseddata:"+JSON.stringify(parsedata));
         var message;
         if(parsedata.error) {
           this.error = true;
@@ -198,12 +199,13 @@ class App extends Component {
                 onlinemembers={this.state.chatMembers}
                 selectedChatId={this.state.selectedChatId}
                 onSelect={this.onChatGroupSelect}
+                user={this.user}
               />
             </div>
             <div className="col-md-10 col-xs-12">
               <hr />
               <div className="chat-area">
-                <ChatMessage messages={this.filteredmessages()}/>
+                <ChatMessage messages={this.filteredmessages()} user={this.user}/>
                 <ChatInput
                   onSendNick={this.onSendNick}
                   onSendChat={this.onSendChat}
