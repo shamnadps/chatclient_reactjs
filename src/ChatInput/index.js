@@ -22,6 +22,8 @@ class ChatInput extends Component {
     this.onSubmitChat = this.onSubmitChat.bind(this);
     this.updateName = this.updateName.bind(this);
     this.updateMessage = this.updateMessage.bind(this);
+    this.handleKeyPressNick = this.handleKeyPressNick.bind(this);
+    this.handleKeyPressMsg = this.handleKeyPressMsg.bind(this);
   }
 
   onSubmitNick() {
@@ -36,6 +38,18 @@ class ChatInput extends Component {
     if (message.trim().length > 0) {
       this.props.onSendChat(name, message);
       this.setState({ message: '' });
+    }
+  }
+
+  handleKeyPressMsg(e) {
+    if (e.key === 'Enter') {
+      this.onSubmitChat();
+    }
+  }
+
+  handleKeyPressNick(e) {
+    if (e.key === 'Enter') {
+      this.onSubmitNick();
     }
   }
 
@@ -60,6 +74,7 @@ class ChatInput extends Component {
               placeholder="Message ~ 200 Chars"
               value={this.state.message}
               onChange={this.updateMessage}
+              onKeyPress={this.handleKeyPressMsg}
             />
             <button type="button" onClick={this.onSubmitChat} className="btn btn-lg btn-primary btn-chat">
               <span className="glyphicon glyphicon-send" />
@@ -73,6 +88,7 @@ class ChatInput extends Component {
               placeholder="Set a Nickname ~ 20 Chars"
               value={this.state.name}
               onChange={this.updateName}
+              onKeyPress={this.handleKeyPressNick}
             />
             <button type="button" onClick={this.onSubmitNick} className="btn btn-primary btn-margin" >Set Nickname</button>
           </div>
