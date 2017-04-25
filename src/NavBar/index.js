@@ -22,4 +22,13 @@ class NavBar extends Component {
   }
 }
 
+NavBar.propTypes = {
+  toggleNavBar: React.PropTypes.func.isRequired,
+
+};
+
+NavBar.defaultProps = {
+  toggleNavBar: () => {},
+};
+
 export default NavBar;

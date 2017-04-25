@@ -25,4 +25,22 @@ const NavBarItems = ({ onlinemembers, onSelect, user }) => (
   </ul>
 );
 
+NavBarItems.propTypes = {
+  onSelect: React.PropTypes.func.isRequired,
+  user: React.PropTypes.string.isRequired,
+  onlinemembers: React.PropTypes.arrayOf(
+    React.PropTypes.shape({
+      id: React.PropTypes.number.isRequired,
+      name: React.PropTypes.string.isRequired,
+      online: React.PropTypes.bool.isRequired,
+    }),
+  ),
+};
+
+NavBarItems.defaultProps = {
+  onSelect: () => {},
+  user: '',
+  onlinemembers: [],
+};
+
 export default NavBarItems;

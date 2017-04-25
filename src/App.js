@@ -56,8 +56,8 @@ class App extends Component {
       id: this.state.messages.length + 1,
       author,
       text,
-      chat_id: author,
-      timestamp: moment().toDate().getTime(),
+      chatId: author,
+      timeStamp: moment().toDate().getTime(),
     };
     const messages = [...this.state.messages, newMessage];
     this.setState({ messages });
@@ -91,9 +91,9 @@ class App extends Component {
     fetch(this.getMembersurl)
     .then(result => result.json())
     .then((result) => {
-      const chatMemberList = result.data.map((item) => {
+      const chatMemberList = result.data.map((item, index) => {
         const chatMember = {
-          id: item.nick,
+          id: index,
           name: item.nick,
           online: item.online,
         };
@@ -155,7 +155,6 @@ class App extends Component {
             });
           }
         } else {
-          console.log(parsedata.error);
           this.setState({
             errorMessages: parsedata.error,
           });
@@ -164,21 +163,19 @@ class App extends Component {
         this.handShakeCompleted = true;
       }
     };
-    this.connection.onerror = (evt) => {
+    this.connection.onerror = () => {
       this.error = true;
       this.setState({
         connectionClosed: true,
         errorMessages: 'Connection closed! Restart Server.',
       });
-      console.log('OnError');
     };
-    this.connection.onclose = (evt) => {
+    this.connection.onclose = () => {
       this.error = true;
       this.setState({
         connectionClosed: true,
         errorMessages: 'Connection closed! Restart Server.',
       });
-      console.log('OnClose Connection Closed');
     };
   }
 

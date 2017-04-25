@@ -29,4 +29,22 @@ const ChatMessage = ({ messages, user }) => (
   </div>
 );
 
+ChatMessage.propTypes = {
+  messages: React.PropTypes.arrayOf(
+    React.PropTypes.shape({
+      id: React.PropTypes.number.isRequired,
+      author: React.PropTypes.string.isRequired,
+      text: React.PropTypes.string.isRequired,
+      chatId: React.PropTypes.string.isRequired,
+      timeStamp: React.PropTypes.number.isRequired,
+    }),
+  ),
+  user: React.PropTypes.string.isRequired,
+};
+
+ChatMessage.defaultProps = {
+  messages: [],
+  user: '',
+};
+
 export default ChatMessage;

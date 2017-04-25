@@ -7,7 +7,7 @@ const ErrorMessages = ({ errorMessages }) => {
   );
 };
 class ChatInput extends Component {
-  nonAlphaNumericRegex = /[^0-9a-zA-Z]+/g;
+
   constructor() {
     super();
 
@@ -38,6 +38,8 @@ class ChatInput extends Component {
       this.setState({ message: '' });
     }
   }
+
+  nonAlphaNumericRegex = /[^0-9a-zA-Z]+/g;
 
   updateName(event) {
     this.setState({ name: event.target.value.replace(this.nonAlphaNumericRegex, '').substr(0, 15) });
@@ -84,11 +86,15 @@ class ChatInput extends Component {
 ChatInput.propTypes = {
   onSendNick: React.PropTypes.func.isRequired,
   onSendChat: React.PropTypes.func.isRequired,
+  errorMessages: React.PropTypes.string.isRequired,
+  nickSuccessful: React.PropTypes.number.isRequired,
 };
 
 ChatInput.defaultProps = {
   onSendNick: () => {},
   onSendChat: () => {},
+  errorMessages: '',
+  nickSuccessful: 1,
 };
 
 export default ChatInput;
