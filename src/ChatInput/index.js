@@ -1,10 +1,10 @@
-import React, { Component} from 'react';
+import React, { Component } from 'react';
 
-const ErrorMessages = ({errorMessages}) => {
-  const className = errorMessages.length > 0 ? "error" : "noerror";
+const ErrorMessages = ({ errorMessages }) => {
+  const className = errorMessages.length > 0 ? 'error' : 'noerror';
   return (
     <p className={className}>{errorMessages}</p>
-  )
+  );
 };
 class ChatInput extends Component {
   nonAlphaNumericRegex = /[^0-9a-zA-Z]+/g;
@@ -15,7 +15,7 @@ class ChatInput extends Component {
       name: '',
       message: '',
       showChatInput: 'hidden',
-      showNickInput: 'nick'
+      showNickInput: 'nick',
     };
 
     this.onSubmitNick = this.onSubmitNick.bind(this);
@@ -25,48 +25,48 @@ class ChatInput extends Component {
   }
 
   onSubmitNick() {
-    const {name} = this.state;
+    const { name } = this.state;
     if (name.trim().length > 0) {
       this.props.onSendNick(name);
     }
   }
 
   onSubmitChat() {
-    const {name, message} = this.state;
+    const { name, message } = this.state;
     if (message.trim().length > 0) {
       this.props.onSendChat(name, message);
-      this.setState({message:''});
+      this.setState({ message: '' });
     }
   }
 
   updateName(event) {
-    this.setState({name:event.target.value.replace(this.nonAlphaNumericRegex, "").substr(0,15)});
+    this.setState({ name: event.target.value.replace(this.nonAlphaNumericRegex, '').substr(0, 15) });
   }
 
   updateMessage(event) {
-    this.setState({message:event.target.value.substr(0,200)});
+    this.setState({ message: event.target.value.substr(0, 200) });
   }
 
-  render () {
+  render() {
     return (
       <div className="chatbox-container">
         <div className="chat-box">
-        <ErrorMessages errorMessages={this.props.errorMessages}/>
-        <div className={ (this.props.nickSuccessful === 2 && this.props.errorMessages.length === 0) ? 'show' : 'hidden'}>
-          <textarea
-            className="form-control"
-            placeholder="Message ~ 200 Chars"
-            value={this.state.message}
-            onChange={this.updateMessage}
-          >
-          </textarea>
-          <button type="button" onClick={this.onSubmitChat} className="btn btn-lg btn-primary btn-chat">
-            <span className="glyphicon glyphicon-send"></span>
-          </button>
+          <ErrorMessages errorMessages={this.props.errorMessages} />
+          <div className={(this.props.nickSuccessful === 2 && this.props.errorMessages.length === 0) ? 'show' : 'hidden'}>
+            <textarea
+              className="form-control"
+              placeholder="Message ~ 200 Chars"
+              value={this.state.message}
+              onChange={this.updateMessage}
+            />
+            <button type="button" onClick={this.onSubmitChat} className="btn btn-lg btn-primary btn-chat">
+              <span className="glyphicon glyphicon-send" />
+            </button>
           </div>
-          <div className={ (this.props.nickSuccessful !== 2 && this.props.errorMessages.length === 0) ? 'show' : 'hidden'} >
+          <div className={(this.props.nickSuccessful !== 2 && this.props.errorMessages.length === 0) ? 'show' : 'hidden'} >
 
-            <input type="text"
+            <input
+              type="text"
               className="form-control"
               placeholder="Set a Nickname ~ 20 Chars"
               value={this.state.name}
@@ -79,16 +79,16 @@ class ChatInput extends Component {
 
     );
   }
-};
+}
 
 ChatInput.propTypes = {
   onSendNick: React.PropTypes.func.isRequired,
-  onSendChat: React.PropTypes.func.isRequired
+  onSendChat: React.PropTypes.func.isRequired,
 };
 
 ChatInput.defaultProps = {
   onSendNick: () => {},
-  onSendChat: () => {}
+  onSendChat: () => {},
 };
 
 export default ChatInput;

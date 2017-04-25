@@ -12,8 +12,8 @@ class App extends Component {
   websocketserver = 'ws://localhost:8888/';
 
   chatMembers = [
-    { id:1, name: 'Group Chat', online: true},
-    { id:2, name: 'App Notifications', online: true },
+    { id: 1, name: 'Group Chat', online: true },
+    { id: 2, name: 'App Notifications', online: true },
   ];
 
   constructor() {
@@ -21,11 +21,11 @@ class App extends Component {
     this.state = {
       messages: [],
       chatMembers: [],
-      errorMessages : '',
+      errorMessages: '',
       selectedChatId: this.chatMembers[0].id,
       connectionClosed: true,
       toggleNavBar: 'col-md-2 col-xs-2 user-menu sidebar-left sidebar-hide',
-      nickSuccessful: 0
+      nickSuccessful: 0,
     };
     this.user = '';
     this.toggleNavBarDiv = true;
@@ -41,9 +41,9 @@ class App extends Component {
   }
 
   onSendNick(author) {
-    this.connection.send("/nick "+author);
+    this.connection.send(`/nick ${author}`);
     this.user = author;
-    this.setState({nickSuccessful: 1});
+    this.setState({ nickSuccessful: 1 });
   }
 
   onSendChat(author, text) {
@@ -53,132 +53,131 @@ class App extends Component {
 
   buildNewChatEntry(author, text) {
     const new_message = {
-      id:this.state.messages.length + 1,
+      id: this.state.messages.length + 1,
       author,
       text,
       chat_id: author,
-      timestamp:moment().toDate().getTime()
+      timestamp: moment().toDate().getTime(),
     };
     const messages = [...this.state.messages, new_message];
-    this.setState({messages});
+    this.setState({ messages });
   }
 
   onChatGroupSelect(id) {
     this.getHistoryData();
-    this.setState({selectedChatId: id});
+    this.setState({ selectedChatId: id });
   }
 
   toggleNavBar() {
-    if(this.toggleNavBarDiv) {
-      this.setState({toggleNavBar: 'col-md-2 col-xs-2 user-menu sidebar-left '});
+    if (this.toggleNavBarDiv) {
+      this.setState({ toggleNavBar: 'col-md-2 col-xs-2 user-menu sidebar-left ' });
       this.toggleNavBarDiv = false;
     } else {
-      this.setState({toggleNavBar: 'col-md-2 col-xs-2 user-menu sidebar-left sidebar-hide'});
+      this.setState({ toggleNavBar: 'col-md-2 col-xs-2 user-menu sidebar-left sidebar-hide' });
       this.toggleNavBarDiv = true;
     }
   }
 
   filteredmessages() {
-    if(this.state.selectedChatId === 1) {
+    if (this.state.selectedChatId === 1) {
       return this.state.messages;
-    } else if(this.state.selectedChatId === 2) {
-      return this.state.messages.filter(({author}) => author === '_server');
-    } else {
-      return this.state.messages.filter(({author}) => author === this.state.selectedChatId);
+    } else if (this.state.selectedChatId === 2) {
+      return this.state.messages.filter(({ author }) => author === '_server');
     }
+    return this.state.messages.filter(({ author }) => author === this.state.selectedChatId);
   }
 
   getMemberdata() {
     fetch(this.getMembersurl)
     .then(result => result.json())
-    .then(result => {
-      const chatMemberList = result.data.map(function(item) {
+    .then((result) => {
+      const chatMemberList = result.data.map((item) => {
         const chatMember = {
           id: item.nick,
           name: item.nick,
-          online: item.online
+          online: item.online,
         };
         return chatMember;
-      })
+      });
       const memberList = [...this.chatMembers, ...chatMemberList];
       this.setState({
-        chatMembers: memberList
-      })
-    })
+        chatMembers: memberList,
+      });
+    });
   }
 
   getHistoryData() {
     fetch(this.getHistoryurl)
     .then(result => result.json())
-    .then(result => {
-      const chatHistoryList = result.data.map(function(item) {
+    .then((result) => {
+      const chatHistoryList = result.data.map((item) => {
         const chatHistory = {
           id: item.timestamp,
           author: item.from,
           text: item.msg,
-          chat_id: item.timestamp
+          chat_id: item.timestamp,
         };
         return chatHistory;
-      })
+      });
       this.setState({
-        messages: chatHistoryList
-      })
-    })
+        messages: chatHistoryList,
+      });
+    });
   }
 
   handleWebSocketConnection() {
     this.handShakeCompleted = false;
     this.connection = new WebSocket(this.websocketserver);
-    this.connection.onmessage = evt => {
+    this.connection.onmessage = (evt) => {
       this.setState({
         connectionClosed: false,
-      })
-      if(this.handShakeCompleted) {
-        var parsedata = JSON.parse(evt.data);
-        var message;
-        if(parsedata.error) {
+      });
+      if (this.handShakeCompleted) {
+        const parsedata = JSON.parse(evt.data);
+        let message;
+        if (parsedata.error) {
           this.error = true;
           message = parsedata.error;
         } else {
           this.error = false;
           message = parsedata.message;
         }
-        if(!this.error) {
-          if(parsedata.from === "_server") {
+        if (!this.error) {
+          if (parsedata.from === '_server') {
             this.getMemberdata();
           }
           this.buildNewChatEntry(parsedata.from, message);
-          if ( this.state.nickSuccessful === 1 ) {
+          if (this.state.nickSuccessful === 1) {
             this.setState({
               nickSuccessful: 2,
-              errorMessages: ''
-            })
+              errorMessages: '',
+            });
           }
         } else {
           console.log(parsedata.error);
           this.setState({
-            errorMessages: parsedata.error
-          })
+            errorMessages: parsedata.error,
+          });
         }
       } else {
         this.handShakeCompleted = true;
       }
     };
-    this.connection.onerror = evt => {
+    this.connection.onerror = (evt) => {
       this.error = true;
       this.setState({
         connectionClosed: true,
-        errorMessages: "Connection closed! Restart Server."
-      })
-      console.log("OnError");
+        errorMessages: 'Connection closed! Restart Server.',
+      });
+      console.log('OnError');
     };
-    this.connection.onclose = evt => {
+    this.connection.onclose = (evt) => {
       this.error = true;
       this.setState({
         connectionClosed: true,
-        errorMessages: "Connection closed! Restart Server."
-      })
-      console.log("OnClose Connection Closed");
+        errorMessages: 'Connection closed! Restart Server.',
+      });
+      console.log('OnClose Connection Closed');
     };
   }
 
@@ -190,7 +189,7 @@ class App extends Component {
     return (
       <div>
         <div className="navbar navbar-inverse navbar-fixed-top">
-          <NavBar toggleNavBar={this.toggleNavBar}/>
+          <NavBar toggleNavBar={this.toggleNavBar} />
         </div>
         <div id="main" className="body-content container-fluid">
           <div className="row">
@@ -205,7 +204,7 @@ class App extends Component {
             <div className="col-md-10 col-xs-12">
               <hr />
               <div className="chat-area">
-                <ChatMessage messages={this.filteredmessages()} user={this.user}/>
+                <ChatMessage messages={this.filteredmessages()} user={this.user} />
                 <ChatInput
                   onSendNick={this.onSendNick}
                   onSendChat={this.onSendChat}
@@ -214,7 +213,7 @@ class App extends Component {
                 />
               </div>
               <hr />
-              <footer></footer>
+              <footer />
             </div>
           </div>
         </div>
