@@ -52,14 +52,14 @@ class App extends Component {
   }
 
   buildNewChatEntry(author, text) {
-    const new_message = {
+    const newMessage = {
       id: this.state.messages.length + 1,
       author,
       text,
       chat_id: author,
       timestamp: moment().toDate().getTime(),
     };
-    const messages = [...this.state.messages, new_message];
+    const messages = [...this.state.messages, newMessage];
     this.setState({ messages });
   }
 
@@ -115,7 +115,8 @@ class App extends Component {
           id: item.timestamp,
           author: item.from,
           text: item.msg,
-          chat_id: item.timestamp,
+          chatId: item.timestamp,
+          timeStamp: item.timestamp,
         };
         return chatHistory;
       });
@@ -196,7 +197,6 @@ class App extends Component {
             <div className={this.state.toggleNavBar}>
               <NavBarItems
                 onlinemembers={this.state.chatMembers}
-                selectedChatId={this.state.selectedChatId}
                 onSelect={this.onChatGroupSelect}
                 user={this.user}
               />

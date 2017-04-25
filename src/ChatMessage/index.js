@@ -1,12 +1,12 @@
 import React from 'react';
 import moment from 'moment';
 
-const ChatMedia = ({ id, author, text, chat_id, timestamp, user }) => (
+const ChatMedia = ({ author, text, timeStamp, user }) => (
   <div className="media">
     <div className="media-body pull-left">
-      <h4 className="media-heading">{author === '_server' ? 'App Notification' : (author === user ? 'You' : author)}</h4>
+      <h4 className="media-heading">{author === user ? 'You' : author}</h4>
       <div className="well">{text}</div>
-      <div className="timestamp">{moment(timestamp).fromNow()}</div>
+      <div className="timestamp">{moment(timeStamp).fromNow()}</div>
       <hr />
     </div>
   </div>
@@ -15,8 +15,15 @@ const ChatMedia = ({ id, author, text, chat_id, timestamp, user }) => (
 const ChatMessage = ({ messages, user }) => (
   <div className="chat-container">
     {
-      messages.map(({ id, author, text, chat_id, timestamp }) =>
-        <ChatMedia key={id} author={author} text={text} chat_id={chat_id} timestamp={timestamp} user={user} />,
+      messages.map(({ id, author, text, chatId, timeStamp }) =>
+        <ChatMedia
+          key={id}
+          author={author === '_server' ? 'App Notification' : author}
+          text={text}
+          chatId={chatId}
+          timeStamp={timeStamp}
+          user={user}
+        />,
       )
     }
   </div>
