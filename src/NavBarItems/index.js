@@ -1,6 +1,6 @@
 import React from 'react';
 
-const NavBarItem = ({ name, online, onClick }) => (
+const NavBarItem = ({name, online, onClick}) => (
   <li onClick={onClick} className={online ? '' : 'offline'}>
     <a href="#" className="ajax-link">
       <i className="glyphicon glyphicon-user" />
@@ -30,7 +30,7 @@ NavBarItems.propTypes = {
   user: React.PropTypes.string.isRequired,
   onlinemembers: React.PropTypes.arrayOf(
     React.PropTypes.shape({
-      id: React.PropTypes.number.isRequired,
+      id: React.PropTypes.string.isRequired,
       name: React.PropTypes.string.isRequired,
       online: React.PropTypes.bool.isRequired,
     }),

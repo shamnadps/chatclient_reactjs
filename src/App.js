@@ -7,14 +7,6 @@ import ChatMessage from './ChatMessage';
 import './App.css';
 
 class App extends Component {
-  getMembersurl = 'http://localhost:8888/users';
-  getHistoryurl = 'http://localhost:8888/history';
-  websocketserver = 'ws://localhost:8888/';
-
-  chatMembers = [
-    { id: 1, name: 'Group Chat', online: true },
-    { id: 2, name: 'App Notifications', online: true },
-  ];
 
   constructor() {
     super();
@@ -40,6 +32,10 @@ class App extends Component {
     this.toggleNavBar = this.toggleNavBar.bind(this);
   }
 
+  componentDidMount() {
+    this.handleWebSocketConnection();
+  }
+
   onSendNick(author) {
     this.connection.send(`/nick ${author}`);
     this.user = author;
@@ -51,49 +47,20 @@ class App extends Component {
     this.connection.send(text);
   }
 
-  buildNewChatEntry(author, text) {
-    const newMessage = {
-      id: this.state.messages.length + 1,
-      author,
-      text,
-      chatId: author,
-      timeStamp: moment().toDate().getTime(),
-    };
-    const messages = [...this.state.messages, newMessage];
-    this.setState({ messages });
-  }
-
   onChatGroupSelect(id) {
     this.getHistoryData();
     this.setState({ selectedChatId: id });
   }
 
-  toggleNavBar() {
-    if (this.toggleNavBarDiv) {
-      this.setState({ toggleNavBar: 'col-md-2 col-xs-2 user-menu sidebar-left ' });
-      this.toggleNavBarDiv = false;
-    } else {
-      this.setState({ toggleNavBar: 'col-md-2 col-xs-2 user-menu sidebar-left sidebar-hide' });
-      this.toggleNavBarDiv = true;
-    }
-  }
-
-  filteredmessages() {
-    if (this.state.selectedChatId === 1) {
-      return this.state.messages;
-    } else if (this.state.selectedChatId === 2) {
-      return this.state.messages.filter(({ author }) => author === '_server');
-    }
-    return this.state.messages.filter(({ author }) => author === this.state.selectedChatId);
-  }
+  getMembersurl = 'http://localhost:8888/users';
 
   getMemberdata() {
     fetch(this.getMembersurl)
     .then(result => result.json())
     .then((result) => {
-      const chatMemberList = result.data.map((item, index) => {
+      const chatMemberList = result.data.map((item) => {
         const chatMember = {
-          id: index,
+          id: item.nick,
           name: item.nick,
           online: item.online,
         };
@@ -106,6 +73,8 @@ class App extends Component {
     });
   }
 
+  getHistoryurl = 'http://localhost:8888/history';
+
   getHistoryData() {
     fetch(this.getHistoryurl)
     .then(result => result.json())
@@ -115,7 +84,6 @@ class App extends Component {
           id: item.timestamp,
           author: item.from,
           text: item.msg,
-          chatId: item.timestamp,
           timeStamp: item.timestamp,
         };
         return chatHistory;
@@ -125,6 +93,43 @@ class App extends Component {
       });
     });
   }
+
+  filteredmessages() {
+    if (this.state.selectedChatId === '#') {
+      return this.state.messages;
+    } else if (this.state.selectedChatId === '$') {
+      return this.state.messages.filter(({ author }) => author === '_server');
+    }
+    return this.state.messages.filter(({ author }) => author === this.state.selectedChatId);
+  }
+
+  toggleNavBar() {
+    if (this.toggleNavBarDiv) {
+      this.setState({ toggleNavBar: 'col-md-2 col-xs-2 user-menu sidebar-left ' });
+      this.toggleNavBarDiv = false;
+    } else {
+      this.setState({ toggleNavBar: 'col-md-2 col-xs-2 user-menu sidebar-left sidebar-hide' });
+      this.toggleNavBarDiv = true;
+    }
+  }
+
+  buildNewChatEntry(author, text) {
+    const newMessage = {
+      id: moment().toDate().getTime(),
+      author,
+      text,
+      timeStamp: moment().toDate().getTime(),
+    };
+    const messages = [...this.state.messages, newMessage];
+    this.setState({ messages });
+  }
+
+  chatMembers = [
+    { id: "#", name: 'Group Chat', online: true },
+    { id: "$", name: 'App Notifications', online: true },
+  ];
+
+  websocketserver = 'ws://localhost:8888/';
 
   handleWebSocketConnection() {
     this.handShakeCompleted = false;
@@ -177,10 +182,6 @@ class App extends Component {
         errorMessages: 'Connection closed! Restart Server.',
       });
     };
-  }
-
-  componentDidMount() {
-    this.handleWebSocketConnection();
   }
 
   render() {

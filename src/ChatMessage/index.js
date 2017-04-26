@@ -15,12 +15,11 @@ const ChatMedia = ({ author, text, timeStamp, user }) => (
 const ChatMessage = ({ messages, user }) => (
   <div className="chat-container">
     {
-      messages.map(({ id, author, text, chatId, timeStamp }) =>
+      messages.map(({ id, author, text, timeStamp }) =>
         <ChatMedia
           key={id}
           author={author === '_server' ? 'App Notification' : author}
           text={text}
-          chatId={chatId}
           timeStamp={timeStamp}
           user={user}
         />,
@@ -35,7 +34,6 @@ ChatMessage.propTypes = {
       id: React.PropTypes.number.isRequired,
       author: React.PropTypes.string.isRequired,
       text: React.PropTypes.string.isRequired,
-      chatId: React.PropTypes.string.isRequired,
       timeStamp: React.PropTypes.number.isRequired,
     }),
   ),
