@@ -17,6 +17,15 @@ This is very simple chat client using ReactJS
 
 * browse to http://localhost:3000
 
+#### PreRequisites for the  Client Application####
+
+The Client application expectes the server to be running on port 8888.
+The below connectivity calls are requested to the server.
+
+To get the websocket connectivity : ws://localhost:8888/
+To get user details : http://localhost:8888/users
+To get chat history : http://localhost:8888/history
+
 #### ReactJS Client ####
 
 The application tries to connect to the websocket server on port 8888.
@@ -28,4 +37,12 @@ Once the nickname is registerd with websocket server the input area of sending c
 
 Now you can start chatting.
 
-*Note! If the connection is closed then the input areas are disabled. You need to refresh the page after restarting server.
+*Note! If the connection is closed then the input areas are disabled. You need to refresh the page after restarting server.*
+
+#### XSS and Input Sanitization ####
+
+XSS and Input Sanitization is handles by ReactJS itself. Since this is a simple application, we do not need to add any external validations.
+
+#### Code Styling and Intendation ####
+
+babel-eslint is been used to correct the styling and the intendation issues.
