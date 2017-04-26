@@ -23,7 +23,9 @@ The Client application expectes the server to be running on port 8888.
 The below connectivity calls are requested to the server.
 
 To get the websocket connectivity : ws://localhost:8888/
+
 To get user details : http://localhost:8888/users
+
 To get chat history : http://localhost:8888/history
 
 #### ReactJS Client ####
@@ -41,8 +43,12 @@ Now you can start chatting.
 
 #### XSS and Input Sanitization ####
 
-XSS and Input Sanitization is handles by ReactJS itself. Since this is a simple application, we do not need to add any external validations.
+XSS and Input Sanitization is handled by ReactJS itself. Since this is a simple application, we do not need to add any external validations.
 
 #### Code Styling and Intendation ####
 
-babel-eslint is been used to correct the styling and the intendation issues.
+babel-eslint is been used to correct the styling and for the intendation issues.
+
+#### Bug Reporting ####
+
+Feel free to report any bugs. I will be more than happy to fix them right away.
