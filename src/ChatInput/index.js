@@ -43,12 +43,14 @@ class ChatInput extends Component {
 
   handleKeyPressMsg(e) {
     if (e.key === 'Enter') {
+      e.preventDefault();
       this.onSubmitChat();
     }
   }
 
   handleKeyPressNick(e) {
     if (e.key === 'Enter') {
+      e.preventDefault();
       this.onSubmitNick();
     }
   }
