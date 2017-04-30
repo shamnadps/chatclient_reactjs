@@ -30,10 +30,20 @@ class App extends Component {
     this.getMemberdata = this.getMemberdata.bind(this);
     this.getHistoryData = this.getHistoryData.bind(this);
     this.toggleNavBar = this.toggleNavBar.bind(this);
+    this.updateTime = this.updateTime.bind(this);
   }
 
   componentDidMount() {
+    this.countdown = setInterval(this.updateTime, 1000);
     this.handleWebSocketConnection();
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.countdown);
+  }
+
+  updateTime() {
+    this.setState({ messages: this.state.messages });
   }
 
   onSendNick(author) {
