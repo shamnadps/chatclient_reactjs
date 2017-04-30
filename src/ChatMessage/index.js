@@ -13,7 +13,7 @@ const ChatMedia = ({ author, text, timeStamp, user }) => (
 );
 
 const ChatMessage = ({ messages, user }) => (
-  <div className="chat-container">
+  <span>
     {
       messages.map(({ id, author, text, timeStamp }) =>
         <ChatMedia
@@ -25,7 +25,7 @@ const ChatMessage = ({ messages, user }) => (
         />,
       )
     }
-  </div>
+  </span>
 );
 
 ChatMessage.propTypes = {

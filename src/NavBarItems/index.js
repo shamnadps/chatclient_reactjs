@@ -1,6 +1,6 @@
 import React from 'react';
 
-const NavBarItem = ({name, online, onClick}) => (
+const NavBarItem = ({ name, online, onClick }) => (
   <li onClick={onClick} className={online ? '' : 'offline'}>
     <a href="#" className="ajax-link">
       <i className="glyphicon glyphicon-user" />

@@ -77,6 +77,7 @@ class ChatInput extends Component {
               value={this.state.message}
               onChange={this.updateMessage}
               onKeyPress={this.handleKeyPressMsg}
+              ref={input => input && input.focus()}
             />
             <button type="button" onClick={this.onSubmitChat} className="btn btn-lg btn-primary btn-chat">
               <span className="glyphicon glyphicon-send" />
@@ -91,6 +92,7 @@ class ChatInput extends Component {
               value={this.state.name}
               onChange={this.updateName}
               onKeyPress={this.handleKeyPressNick}
+              ref={nick => nick && nick.focus()}
             />
             <button type="button" onClick={this.onSubmitNick} className="btn btn-primary btn-margin" >Set Nickname</button>
           </div>
