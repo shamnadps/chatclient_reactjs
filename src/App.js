@@ -18,6 +18,7 @@ class App extends Component {
       connectionClosed: true,
       toggleNavBar: 'col-md-2 col-xs-2 user-menu sidebar-left sidebar-hide',
       nickSuccessful: 0,
+      chatHeader: 'Leadin Chat',
     };
     this.user = '';
     this.toggleNavBarDiv = true;
@@ -54,7 +55,10 @@ class App extends Component {
   onSendNick(author) {
     this.connection.send(`/nick ${author}`);
     this.user = author;
-    this.setState({ nickSuccessful: 1 });
+    this.setState({
+      nickSuccessful: 1,
+      chatHeader: 'Leadin Chat - Group Chat',
+    });
   }
 
   onSendChat(author, text) {
@@ -62,12 +66,24 @@ class App extends Component {
     this.connection.send(text);
     this.setState({
       selectedChatId: '#',
+      chatHeader: 'Leadin Chat - Group Chat',
     });
   }
 
   onChatGroupSelect(id) {
     this.getHistoryData();
-    this.setState({ selectedChatId: id });
+    let title;
+    if (id === '#') {
+      title = '- Group Chat';
+    } else if (id === '$') {
+      title = '- App Notification';
+    } else {
+      title = `- ${id}`;
+    }
+    this.setState({
+      selectedChatId: id,
+      chatHeader: `Leadin Chat ${title}`,
+    });
     this.scroll = true;
   }
 
@@ -221,7 +237,7 @@ class App extends Component {
     return (
       <div>
         <div className="navbar navbar-inverse navbar-fixed-top">
-          <NavBar toggleNavBar={this.toggleNavBar} />
+          <NavBar toggleNavBar={this.toggleNavBar} chatHeader={this.state.chatHeader} />
         </div>
         <div id="main" className="body-content container-fluid">
           <div className="row">

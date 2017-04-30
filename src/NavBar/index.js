@@ -16,7 +16,7 @@ class NavBar extends Component {
         <button type="button" onClick={this.toggleNavBar} className="usermenu-toggle btn-primary">
           <span className="glyphicon glyphicon-user" aria-hidden="true" />
         </button>
-        <a nohref className="navbar-brand">Leadin Chat</a>
+        <a nohref className="navbar-brand">{this.props.chatHeader}</a>
       </div>
     );
   }
@@ -24,11 +24,13 @@ class NavBar extends Component {
 
 NavBar.propTypes = {
   toggleNavBar: React.PropTypes.func.isRequired,
+  chatHeader: React.PropTypes.string.isRequired,
 
 };
 
 NavBar.defaultProps = {
   toggleNavBar: () => {},
+  chatHeader: 'Leadin Chat',
 };
 
 export default NavBar;
