@@ -49,6 +49,14 @@ XSS and Input Sanitization is handled by ReactJS itself. Since this is a simple 
 
 babel-eslint is been used to correct the styling and for the intendation issues.
 
+#### Eslint Config airbnb test ####
+
+For dealing with code standards, eslint-config-airbnb is used. This has been integrated to npm script.
+eslint src/** --fix has been added to test script.
+for checking the code related issues.
+
+* Run: `npm test`
+
 #### Bug Reporting ####
 
 Feel free to report any bugs. I will be more than happy to fix them right away.
