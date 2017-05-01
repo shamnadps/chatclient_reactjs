@@ -232,11 +232,38 @@ textarea {
   .nav.main-menu > li > a, .nav.msg-menu > li > a {
     text-align: left;
   }
+
   .chatbox-container {
     height:15vh;
   }
+
   .chat-container {
     height:85vh;
+  }
+
+  .chatbox-container {
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    position: fixed;
+    z-index: 1001;
+  }
+
+  .usermenu-toggle {
+    display: block;
+    position: relative;
+    float: right;
+    padding: 6px 10px;
+    margin-top: 8px;
+    margin-right: 15px;
+    margin-bottom: 8px;
+    border: 1px solid transparent;
+    border-radius: 25px;
+  }
+
+  .user-menu {
+    position: fixed !important;
+    z-index: 1000;
   }
 }
 
