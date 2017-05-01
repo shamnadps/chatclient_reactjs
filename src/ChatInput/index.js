@@ -117,4 +117,8 @@ ChatInput.defaultProps = {
   nickSuccessful: 1,
 };
 
+ErrorMessages.propTypes = {
+  errorMessages: React.PropTypes.string.isRequired,
+};
+
 export default ChatInput;

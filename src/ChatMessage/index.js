@@ -45,4 +45,11 @@ ChatMessage.defaultProps = {
   user: '',
 };
 
+ChatMedia.propTypes = {
+  author: React.PropTypes.string.isRequired,
+  text: React.PropTypes.string.isRequired,
+  timeStamp: React.PropTypes.number.isRequired,
+  user: React.PropTypes.string.isRequired,
+};
+
 export default ChatMessage;

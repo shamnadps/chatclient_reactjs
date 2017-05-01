@@ -43,4 +43,10 @@ NavBarItems.defaultProps = {
   onlinemembers: [],
 };
 
+NavBarItem.propTypes = {
+  name: React.PropTypes.string.isRequired,
+  online: React.PropTypes.bool.isRequired,
+  onClick: React.PropTypes.func.isRequired,
+};
+
 export default NavBarItems;
