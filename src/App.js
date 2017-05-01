@@ -191,18 +191,16 @@ class App extends Component {
         const parsedata = JSON.parse(evt.data);
         let message;
         if (parsedata.error) {
-          this.error = true;
           message = parsedata.error;
         } else {
-          this.error = false;
           message = parsedata.message;
         }
         if (!this.error) {
-          if (parsedata.from === '_server') {
+          if (parsedata.from === '_server' && message !== 'Nick in use') {
             this.getMemberdata();
           }
           this.buildNewChatEntry(parsedata.from, message);
-          if (this.state.nickSuccessful === 1) {
+          if (this.state.nickSuccessful === 1 && message !== 'Nick in use') {
             this.setState({
               nickSuccessful: 2,
               errorMessages: '',
