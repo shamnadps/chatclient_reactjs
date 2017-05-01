@@ -16,7 +16,7 @@ class NavBar extends Component {
         <button type="button" onClick={this.toggleNavBar} className="usermenu-toggle btn-primary">
           <span className="glyphicon glyphicon-user" aria-hidden="true" />
         </button>
-        <a nohref className="navbar-brand">{this.props.chatHeader}</a>
+        <a className="navbar-brand">{this.props.chatHeader}</a>
       </div>
     );
   }
