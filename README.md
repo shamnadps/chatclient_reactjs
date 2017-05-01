@@ -22,11 +22,11 @@ This is very simple chat client using ReactJS
 The Client application expectes the server to be running on port 8888.
 The below connectivity calls are requested to the server.
 
-To get the websocket connectivity : ws://localhost:8888/
+* To get the websocket connectivity : ws://localhost:8888/
 
-To get user details : http://localhost:8888/users
+* To get user details : http://localhost:8888/users
 
-To get chat history : http://localhost:8888/history
+* To get chat history : http://localhost:8888/history
 
 #### ReactJS Client ####
 
@@ -52,7 +52,7 @@ babel-eslint is been used to correct the styling and for the intendation issues.
 #### Eslint Config airbnb test ####
 
 For dealing with code standards, eslint-config-airbnb is used. This has been integrated to npm script.
-eslint src/** --fix has been added to test script.
+`eslint src/** --fix` has been added to test script.
 for checking the code related issues.
 
 * Run: `npm test`
