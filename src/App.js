@@ -23,6 +23,8 @@ class App extends Component {
     this.user = '';
     this.toggleNavBarDiv = true;
     this.scroll = false;
+    this.getMembersurl = 'http://localhost:8888/users';
+    this.getHistoryurl = 'http://localhost:8888/history';
     this._onSendNick = this._onSendNick.bind(this);
     this._onSendChat = this._onSendChat.bind(this);
     this._buildNewChatEntry = this._buildNewChatEntry.bind(this);
@@ -87,8 +89,6 @@ class App extends Component {
     this.scroll = true;
   }
 
-  getMembersurl = 'http://localhost:8888/users';
-
   _getMemberdata() {
     fetch(this.getMembersurl)
     .then(result => result.json())
@@ -107,8 +107,6 @@ class App extends Component {
       });
     });
   }
-
-  getHistoryurl = 'http://localhost:8888/history';
 
   _getHistoryData() {
     fetch(this.getHistoryurl)
