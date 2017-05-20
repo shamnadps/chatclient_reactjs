@@ -1,13 +1,5 @@
 import React from 'react';
-
-const NavBarItem = ({ name, online, onClick }) => (
-  <li onClick={onClick} className={online ? '' : 'offline'}>
-    <a className="ajax-link">
-      <i className="glyphicon glyphicon-user" />
-      <span className="hidden-xs membername">{name}</span>
-    </a>
-  </li>
-);
+import NavBarItem from '../NavBarItem/NavBarItem';
 
 const NavBarItems = ({ onlinemembers, onSelect, user }) => (
   <ul className="nav main-menu">
@@ -41,12 +33,6 @@ NavBarItems.defaultProps = {
   onSelect: () => {},
   user: '',
   onlinemembers: [],
-};
-
-NavBarItem.propTypes = {
-  name: React.PropTypes.string.isRequired,
-  online: React.PropTypes.bool.isRequired,
-  onClick: React.PropTypes.func.isRequired,
 };
 
 export default NavBarItems;
