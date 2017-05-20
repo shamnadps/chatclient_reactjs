@@ -196,12 +196,12 @@ class App extends Component {
           message = parsedata.message;
         }
         if (!this.error) {
-          if (parsedata.from === '_server' && message !== 'Nick in use') {
+          if (parsedata.from === '_server' && !parsedata.error) {
             this._getMemberdata();
           }
           this.scroll = true;
           this._buildNewChatEntry(parsedata.from, message);
-          if (this.state.nickSuccessful === 1 && message !== 'Nick in use') {
+          if (this.state.nickSuccessful === 1 && !parsedata.error) {
             this.setState({
               nickSuccessful: 2,
               errorMessages: '',

@@ -55,10 +55,8 @@ class ChatInput extends Component {
     }
   }
 
-  nonAlphaNumericRegex = /[^0-9a-zA-Z]+/g;
-
   updateName(event) {
-    this.setState({ name: event.target.value.replace(this.nonAlphaNumericRegex, '').substr(0, 15) });
+    this.setState({ name: event.target.value.substr(0, 15) });
   }
 
   updateMessage(event) {
