@@ -207,7 +207,7 @@ class App extends Component {
           }
         } else {
           this.setState({
-            errorMessages: parsedata.error,
+            errorMessages: message,
           });
         }
       } else {
