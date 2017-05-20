@@ -23,27 +23,27 @@ class App extends Component {
     this.user = '';
     this.toggleNavBarDiv = true;
     this.scroll = false;
-    this.onSendNick = this.onSendNick.bind(this);
-    this.onSendChat = this.onSendChat.bind(this);
-    this.buildNewChatEntry = this.buildNewChatEntry.bind(this);
-    this.onChatGroupSelect = this.onChatGroupSelect.bind(this);
-    this.filteredmessages = this.filteredmessages.bind(this);
-    this.handleWebSocketConnection = this.handleWebSocketConnection.bind(this);
-    this.getMemberdata = this.getMemberdata.bind(this);
-    this.getHistoryData = this.getHistoryData.bind(this);
-    this.toggleNavBar = this.toggleNavBar.bind(this);
-    this.updateTime = this.updateTime.bind(this);
-    this.scrollToBottom = this.scrollToBottom.bind(this);
+    this._onSendNick = this._onSendNick.bind(this);
+    this._onSendChat = this._onSendChat.bind(this);
+    this._buildNewChatEntry = this._buildNewChatEntry.bind(this);
+    this._onChatGroupSelect = this._onChatGroupSelect.bind(this);
+    this._filteredmessages = this._filteredmessages.bind(this);
+    this._handleWebSocketConnection = this._handleWebSocketConnection.bind(this);
+    this._getMemberdata = this._getMemberdata.bind(this);
+    this._getHistoryData = this._getHistoryData.bind(this);
+    this._toggleNavBar = this._toggleNavBar.bind(this);
+    this._updateTime = this._updateTime.bind(this);
+    this._scrollToBottom = this._scrollToBottom.bind(this);
   }
 
   componentDidMount() {
     this.countdown = setInterval(this.updateTime, 1000);
-    this.handleWebSocketConnection();
+    this._handleWebSocketConnection();
   }
 
   componentDidUpdate() {
     if (this.scroll) {
-      this.scrollToBottom();
+      this._scrollToBottom();
       this.scroll = false;
     }
   }
@@ -52,7 +52,7 @@ class App extends Component {
     clearInterval(this.countdown);
   }
 
-  onSendNick(author) {
+  _onSendNick(author) {
     this.connection.send(`/nick ${author}`);
     this.user = author;
     this.setState({
@@ -61,8 +61,8 @@ class App extends Component {
     });
   }
 
-  onSendChat(author, text) {
-    this.buildNewChatEntry(author, text);
+  _onSendChat(author, text) {
+    this._buildNewChatEntry(author, text);
     this.connection.send(text);
     this.setState({
       selectedChatId: '#',
@@ -70,8 +70,8 @@ class App extends Component {
     });
   }
 
-  onChatGroupSelect(id) {
-    this.getHistoryData();
+  _onChatGroupSelect(id) {
+    this._getHistoryData();
     let title;
     if (id === '#') {
       title = '- Group Chat';
@@ -89,7 +89,7 @@ class App extends Component {
 
   getMembersurl = 'http://localhost:8888/users';
 
-  getMemberdata() {
+  _getMemberdata() {
     fetch(this.getMembersurl)
     .then(result => result.json())
     .then((result) => {
@@ -110,7 +110,7 @@ class App extends Component {
 
   getHistoryurl = 'http://localhost:8888/history';
 
-  getHistoryData() {
+  _getHistoryData() {
     fetch(this.getHistoryurl)
     .then(result => result.json())
     .then((result) => {
@@ -129,11 +129,11 @@ class App extends Component {
     });
   }
 
-  updateTime() {
+  _updateTime() {
     this.setState({ messages: this.state.messages });
   }
 
-  filteredmessages() {
+  _filteredmessages() {
     if (this.state.selectedChatId === '#') {
       return this.state.messages;
     } else if (this.state.selectedChatId === '$') {
@@ -142,7 +142,7 @@ class App extends Component {
     return this.state.messages.filter(({ author }) => author === this.state.selectedChatId);
   }
 
-  toggleNavBar() {
+  _toggleNavBar() {
     if (this.toggleNavBarDiv) {
       this.setState({ toggleNavBar: 'col-md-2 col-xs-2 user-menu sidebar-left ' });
       this.toggleNavBarDiv = false;
@@ -152,14 +152,14 @@ class App extends Component {
     }
   }
 
-  scrollToBottom() {
+  _scrollToBottom() {
     const scrollHeight = this.chatContainer.scrollHeight;
     const height = this.chatContainer.clientHeight;
     const maxScrollTop = scrollHeight - height;
     this.chatContainer.scrollTop = maxScrollTop > 0 ? scrollHeight : 0;
   }
 
-  buildNewChatEntry(author, text) {
+  _buildNewChatEntry(author, text) {
     const newMessage = {
       id: moment().toDate().getTime(),
       author,
@@ -180,7 +180,7 @@ class App extends Component {
 
   websocketserver = 'ws://localhost:8888/';
 
-  handleWebSocketConnection() {
+  _handleWebSocketConnection() {
     this.handShakeCompleted = false;
     this.connection = new WebSocket(this.websocketserver);
     this.connection.onmessage = (evt) => {
@@ -197,9 +197,9 @@ class App extends Component {
         }
         if (!this.error) {
           if (parsedata.from === '_server' && message !== 'Nick in use') {
-            this.getMemberdata();
+            this._getMemberdata();
           }
-          this.buildNewChatEntry(parsedata.from, message);
+          this._buildNewChatEntry(parsedata.from, message);
           if (this.state.nickSuccessful === 1 && message !== 'Nick in use') {
             this.setState({
               nickSuccessful: 2,
@@ -235,14 +235,14 @@ class App extends Component {
     return (
       <div>
         <div className="navbar navbar-inverse navbar-fixed-top">
-          <NavBar toggleNavBar={this.toggleNavBar} chatHeader={this.state.chatHeader} />
+          <NavBar toggleNavBar={this._toggleNavBar} chatHeader={this.state.chatHeader} />
         </div>
         <div id="main" className="body-content container-fluid">
           <div className="row">
             <div className={this.state.toggleNavBar}>
               <NavBarItems
                 onlinemembers={this.state.chatMembers}
-                onSelect={this.onChatGroupSelect}
+                onSelect={this._onChatGroupSelect}
                 user={this.user}
               />
             </div>
@@ -250,11 +250,11 @@ class App extends Component {
               <hr />
               <div className="chat-area">
                 <div className="chat-container" ref={(ref) => { this.chatContainer = ref; }}>
-                  <ChatMessage messages={this.filteredmessages()} user={this.user} />
+                  <ChatMessage messages={this._filteredmessages()} user={this.user} />
                 </div>
                 <ChatInput
-                  onSendNick={this.onSendNick}
-                  onSendChat={this.onSendChat}
+                  onSendNick={this._onSendNick}
+                  onSendChat={this._onSendChat}
                   nickSuccessful={this.state.nickSuccessful}
                   errorMessages={this.state.errorMessages}
                 />
