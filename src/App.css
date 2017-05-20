@@ -132,9 +132,9 @@ textarea {
 
 .btn-chat {
   border-radius: 50% !important;
-  position: absolute;
   top: 50px;
-  right: 25px;
+  float: right;
+  margin-right: 25px;
 }
 
 .usermenu-toggle {
