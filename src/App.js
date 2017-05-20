@@ -37,7 +37,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.countdown = setInterval(this.updateTime, 1000);
+    this.countdown = setInterval(this._updateTime, 60000);
     this._handleWebSocketConnection();
   }
 
