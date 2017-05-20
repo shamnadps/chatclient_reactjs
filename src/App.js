@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import moment from 'moment';
-import NavBar from './NavBar';
-import NavBarItems from './NavBarItems';
-import ChatInput from './ChatInput';
-import ChatMessage from './ChatMessage';
+import NavBar from './NavBar/NavBar';
+import NavBarItems from './NavBarItems/NavBarItems';
+import ChatInput from './ChatInput/ChatInput';
+import ChatMessage from './ChatMessage/ChatMessage';
 import './App.css';
 
 class App extends Component {
